@@ -1,0 +1,25 @@
+# Claude runtime state — never commit
+.credentials.json
+history.jsonl
+.last-cleanup
+mcp-needs-auth-cache.json
+
+# Session and project data
+projects/
+sessions/
+cache/
+downloads/
+file-history/
+paste-cache/
+shell-snapshots/
+backups/
+session-env/
+security/
+tasks/
+ide/
+.remember/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini

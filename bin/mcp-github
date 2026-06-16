@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Wraps mcp-server-github, sourcing the GitHub token from gh CLI at runtime.
+# Token is never stored in plaintext — always read fresh from gh auth.
+exec env GITHUB_PERSONAL_ACCESS_TOKEN="$(gh auth token 2>/dev/null)" mcp-server-github "$@"

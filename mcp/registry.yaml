@@ -1,0 +1,87 @@
+# NBR. Company — MCP Server Registry
+# Active standalone servers are wired in ~/.claude/settings.json mcpServers block.
+# Plugin-sourced servers are managed by their respective plugins.
+
+version: "2.0"
+organization: "NBR. Company"
+last_updated: "2026-06-16"
+
+# ─── STANDALONE (wired in settings.json) ──────────────────────────────────────
+
+servers:
+  token-optimizer:
+    binary: /usr/local/bin/token-optimizer-mcp
+    package: "@ooples/token-optimizer-mcp@5.0.1"
+    purpose: token-efficiency-enforcement
+    status: active
+    required: true
+
+  github:
+    binary: /usr/local/bin/mcp-server-github
+    package: "@modelcontextprotocol/server-github@2025.4.8"
+    purpose: github-api, code-search, pr-management, repo-operations
+    status: active
+    auth:
+      method: gh-cli-wrapper
+      wrapper: ~/.claude/bin/mcp-github
+      note: "Token sourced at runtime via `gh auth token` — not stored in plaintext"
+    tools:
+      - search_repositories
+      - get_file_contents
+      - create_or_update_file
+      - create_issue
+      - list_issues
+      - create_pull_request
+      - get_pull_request
+      - list_pull_requests
+      - search_code
+
+  memory:
+    binary: /usr/local/bin/mcp-server-memory
+    package: "@modelcontextprotocol/server-memory@2026.1.26"
+    purpose: session-knowledge-graph, entity-relation-memory
+    status: active
+    note: "In-memory knowledge graph per session. Use for building structured context within a session. Persistent memory lives in ~/.claude/projects/-home-user--claude/memory/"
+    tools:
+      - create_entities
+      - create_relations
+      - add_observations
+      - delete_entities
+      - delete_observations
+      - delete_relations
+      - read_graph
+      - search_nodes
+      - open_nodes
+
+# ─── PLUGIN-SOURCED (managed by plugins, no settings.json entry needed) ───────
+
+plugin_servers:
+  chrome-devtools:
+    plugin: chrome-devtools-mcp@claude-plugins-official
+    purpose: browser-automation, debugging, performance-profiling
+
+  playwright:
+    plugin: playwright@claude-plugins-official
+    purpose: e2e-testing, browser-automation
+
+  context7:
+    plugin: context7@claude-plugins-official
+    purpose: library-docs, api-reference
+
+  desktop-commander:
+    plugin: desktop-commander@claude-plugins-official
+    purpose: system-automation, file-management
+
+  exa:
+    plugin: exa@claude-plugins-official
+    purpose: web-search, research, content-extraction
+
+  linear:
+    plugin: linear@claude-plugins-official
+    purpose: issue-tracking, project-management
+    auth_required: true
+
+  cloudflare:
+    plugin: cloudflare@claude-plugins-official
+    purpose: edge-deployment, workers, observability
+    auth_required: true
